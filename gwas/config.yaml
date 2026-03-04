@@ -1,0 +1,177 @@
+# AD vs PD GWAS Analysis Configuration
+# =====================================
+
+# Data Paths
+# ----------
+data_paths:
+  # Working directory for analysis
+  working_dir: "/path/to/working/directory/ADvPD"
+  
+  # AMP-AD data prefix
+  amp_ad_prefix: "/path/to/AMP_AD/data/FILTERED.AMP_AD_EUR_callrate_related_het_geno_haplotype"
+  
+  # AMP-PD data prefix
+  amp_pd_prefix: "/path/to/AMP_PD/data/FILTERED.AMP_PD_EUR"
+  
+  # Metadata files
+  amp_pd_metadata: "/path/to/AMP_PD/metadata/AMPPD_v3_COV_wPHENOS_wGENOTOOLS.csv"
+  amp_ad_metadata: "/path/to/AMP_AD/metadata/threeCohorts.csv"
+  
+  # Relatedness files
+  amp_pd_related: "/path/to/AMP_PD/related_files/FILTERED.AMP_PD_EUR.related"
+  amp_ad_related: "/path/to/AMP_AD/genotools/FILTERED.AMP_AD_EUR.related"
+
+# Quality Control Parameters
+# --------------------------
+quality_control:
+  # Minor allele frequency threshold
+  maf_threshold: 0.05
+  
+  # Hardy-Weinberg equilibrium p-value threshold
+  hwe_threshold: 0.0000001
+  
+  # Missingness threshold
+  missingness_threshold: 0.05
+  
+  # Missingness by haplotype threshold
+  mishap_threshold: 0.01
+  
+  # Non-random missingness threshold
+  test_missing_threshold: 0.01
+
+# Sample Information
+# ------------------
+samples:
+  # Expected sample sizes (for lambda calculation)
+  cases:
+    ad_cases: 561
+    pd_cases: 2542
+  controls:
+    ad_controls: 832
+    pd_controls: 3031
+
+# Phenotype Coding
+# ----------------
+phenotypes:
+  ad: 2
+  pd: 1
+
+# GWAS Parameters
+# ---------------
+gwas:
+  # Number of principal components to include
+  n_pcs: 10
+  
+  # Number of threads for parallel processing
+  n_threads: 10
+  
+  # Significance threshold
+  significance_threshold: 0.00000005  # 5e-8
+  
+  # Suggestive significance threshold
+  suggestive_threshold: 0.00001  # 1e-5
+  
+  # Control filtering threshold (for removing control-associated variants)
+  control_filter_threshold: 0.00001  # 1e-5
+
+# PCA Parameters
+# --------------
+pca:
+  # Thinning factor for PCA (reduce computational burden)
+  thinning_factor: 0.001
+
+# Output Files
+# ------------
+output_files:
+  # Sample lists
+  amp_pd_control_list: "amp_pd_control_list"
+  amp_pd_case_list: "amp_pd_case_list"
+  amp_ad_control_list: "amp_ad_control_list"
+  amp_ad_case_list: "amp_ad_case_list"
+  
+  # Relatedness exclusion lists
+  amp_pd_related_exclude: "amp_pd_related_to_exclude.tsv"
+  amp_ad_related_exclude: "amp_ad_related_to_exclude.tsv"
+  
+  # GWAS results
+  cases_gwas: "merged_cases_AD_pheno_GWAS.assoc.logistic"
+  controls_gwas: "merged_controls_AD_pheno_GWAS.assoc.logistic"
+  
+  # Significant results
+  cases_significant: "merged_cases_AD_pheno_GWAS_significant_results.txt"
+  controls_significant: "merged_controls_AD_pheno_GWAS_significant_results.txt"
+  
+  # Filtered results
+  filtered_results: "case_versus_case_filtered_results.csv"
+  
+  # Allele frequencies
+  allele_frequencies: "frequencies_for_case_versus_case.frq"
+
+# Software Versions
+# -----------------
+software:
+  plink_version: "6-alpha"
+  plink_legacy_version: "1.9"
+  python_version: "3.x"
+
+# Analysis Steps
+# --------------
+analysis_steps:
+  - "data_preparation"
+  - "sample_selection"
+  - "relatedness_filtering"
+  - "initial_filtering"
+  - "data_merging"
+  - "variant_name_resolution"
+  - "final_merging"
+  - "phenotype_assignment"
+  - "quality_control"
+  - "principal_component_analysis"
+  - "genome_wide_association_study"
+  - "quality_assessment"
+  - "result_filtering"
+  - "allele_frequency_analysis"
+
+# Logging
+# -------
+logging:
+  # Log file name
+  log_file: "ad_vs_pd_gwas.log"
+  
+  # Log level (DEBUG, INFO, WARNING, ERROR)
+  log_level: "INFO"
+  
+  # Include timestamps
+  include_timestamps: true
+
+# Performance
+# -----------
+performance:
+  # Memory limit (GB)
+  memory_limit: 16
+  
+  # Storage requirement (GB)
+  storage_requirement: 100
+  
+  # Recommended CPU cores
+  recommended_cores: 8
+
+# Validation
+# ----------
+validation:
+  # Expected lambda ranges
+  lambda_ranges:
+    cases:
+      min: 0.95
+      max: 1.05
+    controls:
+      min: 0.95
+      max: 1.10
+  
+  # Minimum sample sizes
+  min_sample_sizes:
+    cases: 100
+    controls: 100
+  
+  # Maximum missingness for final analysis
+  max_final_missingness: 0.05 
