@@ -1,0 +1,89 @@
+# Field mappings for harmonization across databases
+common_fields:
+  subject_id:
+    AMP-AD: "individualID"
+    AMP-PD: "participant_id"
+    CMDGA: "subject_id"
+  age:
+    AMP-AD: "age"
+    AMP-PD: "age_at_baseline"
+    CMDGA: "age_at_consent"
+  sex:
+    AMP-AD: "sex"
+    AMP-PD: "sex"
+    CMDGA: "gender"
+  diagnosis:
+    AMP-AD: "diagnosis"
+    AMP-PD: "clinical_diagnosis"
+    CMDGA: "primary_diagnosis"
+
+# Transcriptomics-specific mappings
+transcriptomics_fields:
+  tissue:
+    AMP-AD: "tissue"
+    AMP-PD: "tissue_type"
+    CMDGA: "tissue_source"
+  platform:
+    AMP-AD: "platform"
+    AMP-PD: "sequencing_platform"
+    CMDGA: "platform_type"
+  batch:
+    AMP-AD: "batch"
+    AMP-PD: "sequencing_batch"
+    CMDGA: "batch_id"
+  library_type:
+    AMP-AD: "library_prep"
+    AMP-PD: "library_preparation"
+    CMDGA: "library_type"
+  read_type:
+    AMP-AD: "read_type"
+    AMP-PD: "sequencing_type"
+    CMDGA: "read_configuration"
+
+# Gene ID mappings
+gene_id_types:
+  ensembl: "ENSG"
+  symbol: "HGNC"
+  entrez: "ENTREZ"
+  refseq: "REFSEQ"
+
+# Standard value mappings
+sex_standardization:
+  M: "male"
+  F: "female"
+  MALE: "male"
+  FEMALE: "female"
+  1: "male"
+  2: "female"
+
+# Unit conversions
+unit_conversions:
+  age:
+    years: 1.0
+    months: 0.0833  # 1/12
+    days: 0.00274   # 1/365
+
+# RNA-seq specific parameters
+rna_seq_parameters:
+  min_read_count: 10
+  min_cells_per_gene: 5
+  min_genes_per_cell: 200
+  normalization_method: "log1p"
+  scale_factor: 1000000  # For CPM
+  batch_correction: true
+
+# Expected columns after harmonization
+expected_columns:
+  - subject_id
+  - age
+  - sex
+  - diagnosis
+  - study_source
+  - data_type
+  - specimen_type
+  - analysis_type
+  - tissue
+  - platform
+  - batch
+  - library_type
+  - read_type 
